@@ -9,17 +9,20 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "inertiajs/inertia-laravel": "^3.0",
         "laravel/chisel": "^0.1.0",
         "laravel/fortify": "^1.37.2",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
-        "laravel/wayfinder": "^0.1.14"
+        "laravel/wayfinder": "^0.1.14",
+        "ext-pdo": "*",
+        "ext-pdo_pgsql": "*"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.7",
         "fakerphp/faker": "^1.24",
-        "larastan/larastan": "^3.9",
+        "larastan/larastan": "^3.0",
         "laravel/boost": "^2.2",
         "laravel/pail": "^1.2.5",
         "laravel/pao": "^1.0.6",
@@ -28,7 +31,8 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.9.3",
         "pestphp/pest": "^5.3",
-        "pestphp/pest-plugin-laravel": "^5.0"
+        "pestphp/pest-plugin-laravel": "^5.0",
+        "rector/rector": "^2.8"
     },
     "autoload": {
         "psr-4": {
@@ -55,12 +59,19 @@
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
         ],
+        "rector": "vendor/bin/rector process",
+        "pest": "vendor/bin/pest",
+        "stan": "vendor/bin/phpstan analyse --memory-limit=2G",
         "lint": [
-            "pint --parallel"
+            "@rector",
+            "vendor/bin/pint",
+            "@pest",
+            "@stan"
         ],
         "lint:check": [
             "pint --parallel --test"
         ],
+
         "ci:check": [
             "Composer\\Config::disableProcessTimeout",
             "npm run check",
@@ -94,6 +105,11 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:models"
         ]
     },
     "extra": {
