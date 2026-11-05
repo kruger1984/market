@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import {computed} from 'vue';
 import { SidebarInset } from '@/components/ui/sidebar';
 import type { AppVariant } from '@/types';
+
 
 type Props = {
     variant?: AppVariant;
     class?: string;
 };
 
+
+
 const props = withDefaults(defineProps<Props>(), {
     variant: 'sidebar',
 });
 const className = computed(() => props.class);
+
+
 </script>
 
 <template>
@@ -25,4 +30,5 @@ const className = computed(() => props.class);
     >
         <slot />
     </main>
+
 </template>

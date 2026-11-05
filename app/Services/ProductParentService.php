@@ -4,13 +4,25 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\ProductParent;
+
 class ProductParentService
 {
     /**
-     * Create a new class instance.
+     * @param array<string, mixed> $data
      */
-    public function __construct()
+    public static function store(array $data): ProductParent
     {
-        //
+        return ProductParent::create($data);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function update(ProductParent $productParent, array $data): ProductParent
+    {
+        $productParent->update($data);
+
+        return $productParent->fresh();
     }
 }

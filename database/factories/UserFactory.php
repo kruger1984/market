@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\Role\RoleEnum;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Crypt;
@@ -55,5 +57,13 @@ class UserFactory extends Factory
             ),
             'two_factor_confirmed_at' => now(),
         ]);
+    }
+
+    public function asAdmin(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $role = Role::query()->firstOrCreate(['title' => RoleEnum::Admin->value]);
+            $user->roles()->sync([$role->id]);
+        });
     }
 }
