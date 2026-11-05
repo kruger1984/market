@@ -54,15 +54,21 @@ defineOptions({
         <div class="rounded-xl border bg-card p-6 shadow-sm">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
                 <div>
-                    <span class="text-sm font-medium text-muted-foreground">ID</span>
+                    <span class="text-sm font-medium text-muted-foreground"
+                        >ID</span
+                    >
                     <p class="mt-1 text-lg font-semibold">{{ param.id }}</p>
                 </div>
                 <div>
-                    <span class="text-sm font-medium text-muted-foreground">Title</span>
+                    <span class="text-sm font-medium text-muted-foreground"
+                        >Title</span
+                    >
                     <p class="mt-1 text-lg font-semibold">{{ param.title }}</p>
                 </div>
                 <div>
-                    <span class="text-sm font-medium text-muted-foreground">Filter Type</span>
+                    <span class="text-sm font-medium text-muted-foreground"
+                        >Filter Type</span
+                    >
                     <p class="mt-1 text-lg font-semibold">
                         {{ param.filter_type_label ?? param.filter_type }}
                     </p>

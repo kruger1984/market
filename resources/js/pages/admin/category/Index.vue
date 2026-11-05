@@ -12,9 +12,8 @@ import {
 } from '@/components/ui/table';
 
 import { create, edit, show, destroy, index } from '@/routes/admin/categories';
-import {index as dashboardIndex} from "@/routes/admin/dashboard";
-import { Category } from  "@/types/category"
-
+import { index as dashboardIndex } from '@/routes/admin/dashboard';
+import { Category } from '@/types/category';
 
 const props = defineProps<{
     categories: Category[];
@@ -36,7 +35,7 @@ defineOptions({
             {
                 title: 'Categories',
                 href: index(),
-            }
+            },
         ],
     },
 });
@@ -49,7 +48,9 @@ defineOptions({
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-2xl font-bold tracking-tight">Categories</h1>
-                <p class="text-sm text-muted-foreground">Manage product categories</p>
+                <p class="text-sm text-muted-foreground">
+                    Manage product categories
+                </p>
             </div>
 
             <Button as-child class="gap-2">
@@ -72,13 +73,28 @@ defineOptions({
                 </TableHeader>
                 <TableBody>
                     <template v-if="categories.length > 0">
-                        <TableRow v-for="category in categories" :key="category.id">
-                            <TableCell class="font-medium">{{ category.id }}</TableCell>
-                            <TableCell><Link :href="show(category)" class="hover:underline">{{ category.title }}</Link></TableCell>
+                        <TableRow
+                            v-for="category in categories"
+                            :key="category.id"
+                        >
+                            <TableCell class="font-medium">{{
+                                category.id
+                            }}</TableCell>
+                            <TableCell
+                                ><Link
+                                    :href="show(category)"
+                                    class="hover:underline"
+                                    >{{ category.title }}</Link
+                                ></TableCell
+                            >
                             <TableCell class="text-muted-foreground">
                                 <Link
                                     v-if="category.category"
-                                    :href="show.url({ category: category.category.id })"
+                                    :href="
+                                        show.url({
+                                            category: category.category.id,
+                                        })
+                                    "
                                     class="hover:underline"
                                 >
                                     {{ category.category.title }}
@@ -87,14 +103,26 @@ defineOptions({
                             </TableCell>
                             <TableCell class="text-right">
                                 <div class="flex justify-end gap-2">
-                                    <Button variant="outline" size="icon" as-child>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        as-child
+                                    >
                                         <Link :href="show.url(category.id)">
-                                            <Eye class="h-4 w-4 text-gray-500" />
+                                            <Eye
+                                                class="h-4 w-4 text-gray-500"
+                                            />
                                         </Link>
                                     </Button>
-                                    <Button variant="outline" size="icon" as-child>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        as-child
+                                    >
                                         <Link :href="edit.url(category.id)">
-                                            <Pencil class="h-4 w-4 text-blue-500" />
+                                            <Pencil
+                                                class="h-4 w-4 text-blue-500"
+                                            />
                                         </Link>
                                     </Button>
                                     <Button
@@ -111,7 +139,10 @@ defineOptions({
                     </template>
                     <template v-else>
                         <TableRow>
-                            <TableCell colspan="4" class="h-24 text-center text-muted-foreground">
+                            <TableCell
+                                colspan="4"
+                                class="h-24 text-center text-muted-foreground"
+                            >
                                 No categories found.
                             </TableCell>
                         </TableRow>

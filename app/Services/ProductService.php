@@ -9,7 +9,7 @@ use App\Models\Product;
 class ProductService
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public static function store(array $data): Product
     {
@@ -17,7 +17,7 @@ class ProductService
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public static function update(Product $product, array $data): Product
     {

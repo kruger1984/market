@@ -9,7 +9,7 @@ use App\Models\Param;
 class ParamService
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public static function store(array $data): Param
     {
@@ -17,7 +17,7 @@ class ParamService
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public static function update(Param $param, array $data): Param
     {

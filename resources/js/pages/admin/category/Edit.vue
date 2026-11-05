@@ -21,8 +21,6 @@ const props = defineProps<{
     categories?: Category[];
 }>();
 
-
-
 defineOptions({
     layout: {
         breadcrumbs: [
@@ -64,7 +62,10 @@ const submit = () => {
             <h1 class="text-2xl font-bold tracking-tight">Edit category</h1>
         </div>
 
-        <form @submit.prevent="submit" class="space-y-4 rounded-xl border bg-card p-6 shadow-sm">
+        <form
+            @submit.prevent="submit"
+            class="space-y-4 rounded-xl border bg-card p-6 shadow-sm"
+        >
             <div class="space-y-2">
                 <Label for="title">Title</Label>
                 <Input
@@ -81,12 +82,20 @@ const submit = () => {
             <div class="space-y-2">
                 <Label for="parent_id">Parent Category</Label>
                 <Select
-                    :model-value="form.parent_id ? String(form.parent_id) : 'none'"
-                    @update:model-value="(val) => (form.parent_id = val && val !== 'none' ? Number(val) : null)"
+                    :model-value="
+                        form.parent_id ? String(form.parent_id) : 'none'
+                    "
+                    @update:model-value="
+                        (val) =>
+                            (form.parent_id =
+                                val && val !== 'none' ? Number(val) : null)
+                    "
                     :disabled="form.processing"
                 >
                     <SelectTrigger id="parent_id" class="w-full">
-                        <SelectValue placeholder="Select parent category (optional)" />
+                        <SelectValue
+                            placeholder="Select parent category (optional)"
+                        />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>

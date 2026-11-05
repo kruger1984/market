@@ -3,9 +3,8 @@ import { Head, Link } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Pencil } from '@lucide/vue';
 import { index, edit } from '@/routes/admin/categories';
-import {Category} from "@/types/category";
-import {index as dashboardIndex} from "@/routes/admin/dashboard";
-
+import { Category } from '@/types/category';
+import { index as dashboardIndex } from '@/routes/admin/dashboard';
 
 const props = defineProps<{
     category: Category;
@@ -28,7 +27,6 @@ defineOptions({
         ],
     },
 });
-
 </script>
 
 <template>
@@ -42,7 +40,9 @@ defineOptions({
                         <ArrowLeft class="h-4 w-4" />
                     </Link>
                 </Button>
-                <h1 class="text-2xl font-bold tracking-tight">Category Details</h1>
+                <h1 class="text-2xl font-bold tracking-tight">
+                    Category Details
+                </h1>
             </div>
 
             <Button as-child class="gap-2">
@@ -65,7 +65,9 @@ defineOptions({
                 </div>
                 <div>
                     <span class="text-sm text-muted-foreground">Category</span>
-                    <p class="text-lg font-medium text-muted-foreground">{{ category.category ? category.category.title : '-' }}</p>
+                    <p class="text-lg font-medium text-muted-foreground">
+                        {{ category.category ? category.category.title : '-' }}
+                    </p>
                 </div>
             </div>
         </div>

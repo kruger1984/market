@@ -66,7 +66,7 @@ class ParamController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Param $param):Response
+    public function edit(Param $param): Response
     {
         $param = ParamResource::make($param)->resolve();
         $filterTypes = ParamFilterTypeEnum::options();

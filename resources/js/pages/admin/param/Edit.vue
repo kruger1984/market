@@ -59,10 +59,15 @@ const submit = () => {
                     <ArrowLeft class="h-4 w-4" />
                 </Link>
             </Button>
-            <h1 class="text-2xl font-bold tracking-tight">Edit param #{{ param.id }}</h1>
+            <h1 class="text-2xl font-bold tracking-tight">
+                Edit param #{{ param.id }}
+            </h1>
         </div>
 
-        <form @submit.prevent="submit" class="space-y-4 rounded-xl border bg-card p-6 shadow-sm">
+        <form
+            @submit.prevent="submit"
+            class="space-y-4 rounded-xl border bg-card p-6 shadow-sm"
+        >
             <div class="space-y-2">
                 <Label for="title">Title</Label>
                 <Input
@@ -79,8 +84,12 @@ const submit = () => {
             <div class="space-y-2">
                 <Label for="filter_type">Filter Type</Label>
                 <Select
-                    :model-value="form.filter_type ? String(form.filter_type) : undefined"
-                    @update:model-value="(val) => (form.filter_type = val ? Number(val) : null)"
+                    :model-value="
+                        form.filter_type ? String(form.filter_type) : undefined
+                    "
+                    @update:model-value="
+                        (val) => (form.filter_type = val ? Number(val) : null)
+                    "
                     :disabled="form.processing"
                 >
                     <SelectTrigger id="filter_type" class="w-full">

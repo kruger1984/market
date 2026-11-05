@@ -14,8 +14,7 @@ import {
 import { ArrowLeft } from '@lucide/vue';
 import { store, index } from '@/routes/admin/params';
 import { index as dashboardIndex } from '@/routes/admin/dashboard';
-import {FilterTypeOption} from "@/types/param";
-
+import { FilterTypeOption } from '@/types/param';
 
 const props = defineProps<{
     filterTypes: FilterTypeOption[];
@@ -26,7 +25,7 @@ defineOptions({
         breadcrumbs: [
             { title: 'Dashboard', href: dashboardIndex() },
             { title: 'Params', href: index() },
-            { title: 'Create' }
+            { title: 'Create' },
         ],
     },
 });
@@ -43,7 +42,6 @@ const submit = () => {
         },
     });
 };
-
 </script>
 
 <template>
@@ -59,7 +57,10 @@ const submit = () => {
             <h1 class="text-2xl font-bold tracking-tight">Create param</h1>
         </div>
 
-        <form @submit.prevent="submit" class="space-y-4 rounded-xl border bg-card p-6 shadow-sm">
+        <form
+            @submit.prevent="submit"
+            class="space-y-4 rounded-xl border bg-card p-6 shadow-sm"
+        >
             <div class="space-y-2">
                 <Label for="title">Title</Label>
                 <Input
@@ -76,8 +77,12 @@ const submit = () => {
             <div class="space-y-2">
                 <Label for="filter_type">Filter Type</Label>
                 <Select
-                    :model-value="form.filter_type ? String(form.filter_type) : undefined"
-                    @update:model-value="(val) => (form.filter_type = val ? Number(val) : null)"
+                    :model-value="
+                        form.filter_type ? String(form.filter_type) : undefined
+                    "
+                    @update:model-value="
+                        (val) => (form.filter_type = val ? Number(val) : null)
+                    "
                     :disabled="form.processing"
                 >
                     <SelectTrigger id="filter_type" class="w-full">
@@ -85,7 +90,6 @@ const submit = () => {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-
                             <SelectItem
                                 v-for="type in filterTypes"
                                 :key="type.value"

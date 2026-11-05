@@ -13,9 +13,8 @@ import {
 } from '@/components/ui/select';
 import { ArrowLeft } from '@lucide/vue';
 import { store, index } from '@/routes/admin/categories';
-import {index as dashboardIndex} from "@/routes/admin/dashboard";
-import {Category} from "@/types/category"
-
+import { index as dashboardIndex } from '@/routes/admin/dashboard';
+import { Category } from '@/types/category';
 
 const props = defineProps<{
     categories?: Category[];
@@ -33,8 +32,8 @@ defineOptions({
                 href: index(),
             },
             {
-                title: 'Create'
-            }
+                title: 'Create',
+            },
         ],
     },
 });
@@ -62,7 +61,10 @@ const submit = () => {
             <h1 class="text-2xl font-bold tracking-tight">Create category</h1>
         </div>
 
-        <form @submit.prevent="submit" class="space-y-4 rounded-xl border bg-card p-6 shadow-sm">
+        <form
+            @submit.prevent="submit"
+            class="space-y-4 rounded-xl border bg-card p-6 shadow-sm"
+        >
             <div class="space-y-2">
                 <Label for="title">Title</Label>
                 <Input
@@ -79,12 +81,18 @@ const submit = () => {
             <div class="space-y-2">
                 <Label for="parent_id">Parent Category</Label>
                 <Select
-                    :model-value="form.parent_id ? String(form.parent_id) : undefined"
-                    @update:model-value="(val) => (form.parent_id = val ? Number(val) : null)"
+                    :model-value="
+                        form.parent_id ? String(form.parent_id) : undefined
+                    "
+                    @update:model-value="
+                        (val) => (form.parent_id = val ? Number(val) : null)
+                    "
                     :disabled="form.processing"
                 >
                     <SelectTrigger id="parent_id" class="w-full">
-                        <SelectValue placeholder="Select parent category (optional)" />
+                        <SelectValue
+                            placeholder="Select parent category (optional)"
+                        />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>

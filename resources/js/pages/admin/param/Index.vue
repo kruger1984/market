@@ -12,9 +12,8 @@ import {
 } from '@/components/ui/table';
 
 import { create, edit, show, destroy, index } from '@/routes/admin/params';
-import {index as dashboardIndex} from "@/routes/admin/dashboard";
-import {Param} from "@/types/param";
-
+import { index as dashboardIndex } from '@/routes/admin/dashboard';
+import { Param } from '@/types/param';
 
 const props = defineProps<{
     params: Param[];
@@ -36,7 +35,7 @@ defineOptions({
             {
                 title: 'Params',
                 href: index(),
-            }
+            },
         ],
     },
 });
@@ -73,8 +72,16 @@ defineOptions({
                 <TableBody>
                     <template v-if="params.length > 0">
                         <TableRow v-for="param in params" :key="param.id">
-                            <TableCell class="font-medium">{{ param.id }}</TableCell>
-                            <TableCell><Link :href="show(param)" class="hover:underline">{{ param.title }}</Link></TableCell>
+                            <TableCell class="font-medium">{{
+                                param.id
+                            }}</TableCell>
+                            <TableCell
+                                ><Link
+                                    :href="show(param)"
+                                    class="hover:underline"
+                                    >{{ param.title }}</Link
+                                ></TableCell
+                            >
                             <TableCell class="text-muted-foreground">
                                 <Link class="hover:underline">
                                     {{ param.filter_type_label }}
@@ -82,14 +89,26 @@ defineOptions({
                             </TableCell>
                             <TableCell class="text-right">
                                 <div class="flex justify-end gap-2">
-                                    <Button variant="outline" size="icon" as-child>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        as-child
+                                    >
                                         <Link :href="show.url(param.id)">
-                                            <Eye class="h-4 w-4 text-gray-500" />
+                                            <Eye
+                                                class="h-4 w-4 text-gray-500"
+                                            />
                                         </Link>
                                     </Button>
-                                    <Button variant="outline" size="icon" as-child>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        as-child
+                                    >
                                         <Link :href="edit.url(param.id)">
-                                            <Pencil class="h-4 w-4 text-blue-500" />
+                                            <Pencil
+                                                class="h-4 w-4 text-blue-500"
+                                            />
                                         </Link>
                                     </Button>
                                     <Button
@@ -106,7 +125,10 @@ defineOptions({
                     </template>
                     <template v-else>
                         <TableRow>
-                            <TableCell colspan="4" class="h-24 text-center text-muted-foreground">
+                            <TableCell
+                                colspan="4"
+                                class="h-24 text-center text-muted-foreground"
+                            >
                                 No params found.
                             </TableCell>
                         </TableRow>
