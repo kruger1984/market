@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources\ProductParent;
+namespace App\Http\Resources\Image;
 
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductParentResource extends JsonResource
+/**
+ * @mixin Image
+ */
+class ImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,6 +20,9 @@ class ProductParentResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'url' => $this->url,
+        ];
     }
 }

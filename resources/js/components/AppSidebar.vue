@@ -2,11 +2,12 @@
 import { Link } from '@inertiajs/vue3';
 import {
     BookOpen,
+    Carrot,
+    Folder,
     FolderGit2,
     LayoutGrid,
-    Folder,
-    Tags,
     Package,
+    Tags,
 } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -23,7 +24,7 @@ import {
 } from '@/components/ui/sidebar';
 import { index as dashboard } from '@/routes/admin/dashboard/index';
 import { index as categories } from '@/routes/admin/categories/index';
-import { index as productParents } from '@/routes/admin/product-parents/index';
+import { index as productGroups } from '@/routes/admin/product-groups/index';
 import { index as products } from '@/routes/admin/products/index';
 import { index as params } from '@/routes/admin/params/index';
 import type { NavItem } from '@/types';
@@ -37,16 +38,16 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Products',
         href: products(),
-        icon: Folder,
+        icon: Carrot,
     },
     {
         title: 'Categories',
         href: categories(),
-        icon: LayoutGrid,
+        icon: Folder,
     },
     {
-        title: 'Product Parents',
-        href: productParents(),
+        title: 'Product Groups',
+        href: productGroups(),
         icon: Package,
     },
     {

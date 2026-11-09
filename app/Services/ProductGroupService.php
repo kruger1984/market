@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\ProductParent;
+use App\Models\ProductGroup;
 
-class ProductParentService
+class ProductGroupService
 {
     /**
      * @param  array<string, mixed>  $data
      */
-    public static function store(array $data): ProductParent
+    public static function store(array $data): ProductGroup
     {
-        return ProductParent::create($data);
+        return ProductGroup::create($data);
     }
 
     /**
      * @param  array<string, mixed>  $data
      */
-    public static function update(ProductParent $productParent, array $data): ProductParent
+    public static function update(ProductGroup $productParent, array $data): ProductGroup
     {
         $productParent->update($data);
 

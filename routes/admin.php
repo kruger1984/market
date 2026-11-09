@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\ParamController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ProductParentController;
+use App\Http\Controllers\Admin\ProductGroupController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,11 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', IsAdminMiddleware::c
     Route::resource('products', ProductController::class);
     Route::resource('params', ParamController::class);
     Route::resource('categories', CategoryController::class);
-    Route::resource('product-parents', ProductParentController::class)->parameters(
-        ['product-parents' => 'productParent']
+    Route::resource('product-groups', ProductGroupController::class)->parameters(
+        ['product-groups' => 'productGroup']
     );
+
+    //    Route::get('products/{product}/children', [ProductController::class, 'indexChild'])->name('products.children.index');
+    //    Route::post('products/{product}/replicate', [ProductController::class, 'replicate'])->name('products.replicate');
+    Route::delete('images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
 });

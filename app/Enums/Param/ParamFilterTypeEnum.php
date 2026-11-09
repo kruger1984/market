@@ -8,6 +8,7 @@ enum ParamFilterTypeEnum: int
 {
     case INTEGER = 1;
     case SELECT = 2;
+    case CHECKBOX = 3;
 
     /**
      * @return array<int, string>

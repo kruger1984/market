@@ -1,7 +1,7 @@
 {
     "preset": "laravel",
     "notPath": ["tests/TestCase.php", "tmp"],
-    "exclude": ["docker", "vendor", "node_modules", "storage"],
+    "exclude": ["docker", "vendor", "node_modules", "storage", "public/vendor"],
     "rules": {
         "array_push": true,
         "backtick_to_shell_exec": true,

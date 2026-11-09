@@ -9,3 +9,9 @@ export interface FilterTypeOption {
     value: number;
     label: string;
 }
+
+export interface ParamWithPivotValue {
+    id: number;
+    title: string;
+    value: string;
+}

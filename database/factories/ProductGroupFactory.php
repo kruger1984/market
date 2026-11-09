@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\ProductParent;
+use App\Models\ProductGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<ProductParent>
+ * @extends Factory<ProductGroup>
  */
-class ProductParentFactory extends Factory
+class ProductGroupFactory extends Factory
 {
     /**
      * Define the model's default state.
