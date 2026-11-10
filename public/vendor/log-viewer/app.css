@@ -275,7 +275,7 @@ video {
     --tw-contain-size: ;
     --tw-contain-layout: ;
     --tw-contain-paint: ;
-    --tw-contain-style:;
+    --tw-contain-style: ;
 }
 ::backdrop {
     --tw-border-spacing-x: 0;
@@ -328,7 +328,7 @@ video {
     --tw-contain-size: ;
     --tw-contain-layout: ;
     --tw-contain-paint: ;
-    --tw-contain-style:;
+    --tw-contain-style: ;
 }
 .\!container {
     width: 100% !important;

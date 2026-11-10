@@ -13,16 +13,28 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, Upload, X } from 'lucide-vue-next';
+import { ArrowLeft, Plus, Trash2, Upload, X } from 'lucide-vue-next';
 import { store, index } from '@/routes/admin/products';
 import { index as dashboardIndex } from '@/routes/admin/dashboard';
 import type { Category } from '@/types/category';
 import Editor from '@/components/ui/editor/Editor.vue';
 import { ProductGroup } from '@/types/product-group';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
+import type { Param, ParamFormItem } from '@/types/param';
+import { ProductForm } from '@/types/product';
+import ProductParamsEditor from '@/components/ProductParamsEditor.vue';
 
 const props = defineProps<{
     categories: Category[];
     productGroups: ProductGroup[];
+    params: Param[];
 }>();
 
 defineOptions({
@@ -34,21 +46,6 @@ defineOptions({
         ],
     },
 });
-
-interface ProductForm {
-    product: {
-        title: string;
-        sku: string;
-        description: string;
-        content: string;
-        price: number | null;
-        old_price: number | null;
-        qty: number;
-        category_id: number | null;
-        product_group_id: number | null;
-    };
-    images: File[];
-}
 
 const form = useForm<ProductForm>({
     product: {
@@ -63,6 +60,7 @@ const form = useForm<ProductForm>({
         product_group_id: null,
     },
     images: [],
+    params: [],
 });
 
 const imagePreviews = ref<string[]>([]);
@@ -86,6 +84,24 @@ const removeImage = (index: number) => {
     imagePreviews.value.splice(index, 1);
     form.images.splice(index, 1);
     form.clearErrors('images');
+};
+
+const getAvailableParams = (currentId: number | null) => {
+    const selectedIds = form.params
+        .map((p) => p.id)
+        .filter((id): id is number => id !== null && id !== currentId);
+    return props.params.filter((param) => !selectedIds.includes(param.id));
+};
+
+const addParamRow = () => {
+    form.params.push({
+        id: null,
+        value: '',
+    });
+};
+
+const removeParamRow = (index: number) => {
+    form.params.splice(index, 1);
 };
 
 const submit = () => {
@@ -404,6 +420,18 @@ const submit = () => {
                     {{ form.errors.images }}
                 </p>
             </div>
+
+            <!-- Parameters Section -->
+            <<ProductParamsEditor
+                v-model="form.params"
+                :params="props.params"
+                :processing="form.processing"
+                :errors="form.errors"
+                @clear-error="
+                    (field) =>
+                        form.clearErrors(field as keyof typeof form.errors)
+                "
+            />
 
             <!-- Action Buttons -->
             <div class="flex justify-end gap-3 pt-4">

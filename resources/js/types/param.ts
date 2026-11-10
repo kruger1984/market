@@ -15,3 +15,8 @@ export interface ParamWithPivotValue {
     title: string;
     value: string;
 }
+
+export interface ParamFormItem {
+    id: number | null;
+    value: string;
+}

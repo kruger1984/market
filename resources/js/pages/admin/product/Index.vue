@@ -65,6 +65,7 @@ defineOptions({
                     <TableRow>
                         <TableHead class="w-20">ID</TableHead>
                         <TableHead>Title</TableHead>
+                        <TableHead>Image</TableHead>
                         <TableHead>Product Group</TableHead>
                         <TableHead>Qty</TableHead>
                         <TableHead class="text-right">Actions</TableHead>
@@ -76,6 +77,12 @@ defineOptions({
                             <TableCell class="font-medium">{{
                                 product.id
                             }}</TableCell>
+                            <TableCell class="font-medium"
+                                ><img
+                                    class="w-10"
+                                    :src="product.preview_image_url"
+                                    :alt="product.title"
+                            /></TableCell>
                             <TableCell
                                 ><Link
                                     :href="show(product)"

@@ -19,8 +19,12 @@ import { destroy as destroyImage } from '@/routes/admin/images';
 import { index as dashboardIndex } from '@/routes/admin/dashboard';
 import type { Category } from '@/types/category';
 import type { ProductGroup } from '@/types/product-group';
-import type { Product, Image as ProductImage } from '@/types/product';
-import type { Param } from '@/types/param';
+import type {
+    Product,
+    Image as ProductImage,
+    ProductForm,
+} from '@/types/product';
+import type { Param, ParamFormItem } from '@/types/param';
 import Editor from '@/components/ui/editor/Editor.vue';
 import {
     Table,
@@ -30,6 +34,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import ProductParamsEditor from '@/components/ProductParamsEditor.vue';
 
 const props = defineProps<{
     categories: Category[];
@@ -47,27 +52,6 @@ defineOptions({
         ],
     },
 });
-
-interface ParamFormItem {
-    id: number | null;
-    value: string;
-}
-
-interface ProductForm {
-    product: {
-        title: string;
-        sku: string;
-        description: string;
-        content: string;
-        price: number | null;
-        old_price: number | null;
-        qty: number;
-        category_id: number | null;
-        product_group_id: number | null;
-    };
-    images: File[];
-    params: ParamFormItem[];
-}
 
 const form = useForm<ProductForm>({
     product: {
@@ -122,7 +106,6 @@ const deleteExistingImage = (id: number, index: number) => {
     }
 };
 
-// Фильтрация: не показывать уже выбранные параметры в других строках
 const getAvailableParams = (currentId: number | null) => {
     const selectedIds = form.params
         .map((p) => p.id)
@@ -479,151 +462,17 @@ const submit = () => {
             </div>
 
             <!-- Parameters Section -->
-            <div class="space-y-3">
-                <div class="flex items-center justify-between">
-                    <Label>Product Parameters</Label>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        class="gap-1.5 text-xs"
-                        @click="addParamRow"
-                    >
-                        <Plus class="h-3.5 w-3.5" />
-                        Add parameter
-                    </Button>
-                </div>
-
-                <div class="rounded-md border bg-card">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead class="w-1/2">Param title</TableHead>
-                                <TableHead class="w-1/2">Value</TableHead>
-                                <TableHead class="w-12 text-right"></TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <template v-if="form.params.length > 0">
-                                <TableRow
-                                    v-for="(paramRow, index) in form.params"
-                                    :key="index"
-                                >
-                                    <!-- Parameter Selection -->
-                                    <TableCell class="align-top">
-                                        <Select
-                                            :model-value="
-                                                paramRow.id
-                                                    ? String(paramRow.id)
-                                                    : undefined
-                                            "
-                                            @update:model-value="
-                                                (val) => {
-                                                    paramRow.id = val
-                                                        ? Number(val)
-                                                        : null;
-                                                    form.clearErrors(
-                                                        `params.${index}.id` as keyof typeof form.errors,
-                                                    );
-                                                }
-                                            "
-                                            :disabled="form.processing"
-                                        >
-                                            <SelectTrigger class="w-full">
-                                                <SelectValue
-                                                    placeholder="Select parameter..."
-                                                />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    <SelectItem
-                                                        v-for="param in getAvailableParams(
-                                                            paramRow.id,
-                                                        )"
-                                                        :key="param.id"
-                                                        :value="
-                                                            String(param.id)
-                                                        "
-                                                    >
-                                                        {{ param.title }}
-                                                    </SelectItem>
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
-                                        <p
-                                            v-if="
-                                                form.errors[
-                                                    `params.${index}.id` as keyof typeof form.errors
-                                                ]
-                                            "
-                                            class="mt-1 text-xs text-red-500"
-                                        >
-                                            {{
-                                                form.errors[
-                                                    `params.${index}.id` as keyof typeof form.errors
-                                                ]
-                                            }}
-                                        </p>
-                                    </TableCell>
-
-                                    <!-- Parameter Value -->
-                                    <TableCell class="align-top">
-                                        <Input
-                                            v-model="paramRow.value"
-                                            placeholder="Enter value..."
-                                            :disabled="form.processing"
-                                            @input="
-                                                form.clearErrors(
-                                                    `params.${index}.value` as keyof typeof form.errors,
-                                                )
-                                            "
-                                        />
-                                        <p
-                                            v-if="
-                                                form.errors[
-                                                    `params.${index}.value` as keyof typeof form.errors
-                                                ]
-                                            "
-                                            class="mt-1 text-xs text-red-500"
-                                        >
-                                            {{
-                                                form.errors[
-                                                    `params.${index}.value` as keyof typeof form.errors
-                                                ]
-                                            }}
-                                        </p>
-                                    </TableCell>
-
-                                    <!-- Actions -->
-                                    <TableCell class="text-right align-top">
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            size="icon"
-                                            class="h-9 w-9 text-muted-foreground hover:text-red-500"
-                                            @click="removeParamRow(index)"
-                                            :disabled="form.processing"
-                                        >
-                                            <Trash2 class="h-4 w-4" />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            </template>
-                            <template v-else>
-                                <TableRow>
-                                    <TableCell
-                                        colspan="3"
-                                        class="h-20 text-center text-sm text-muted-foreground"
-                                    >
-                                        No parameters added yet. Click "Add
-                                        parameter" to specify attributes.
-                                    </TableCell>
-                                </TableRow>
-                            </template>
-                        </TableBody>
-                    </Table>
-                </div>
-            </div>
+            <!-- Parameters Section -->
+            <<ProductParamsEditor
+                v-model="form.params"
+                :params="props.params"
+                :processing="form.processing"
+                :errors="form.errors"
+                @clear-error="
+                    (field) =>
+                        form.clearErrors(field as keyof typeof form.errors)
+                "
+            />
 
             <!-- Action Buttons -->
             <div class="flex justify-end gap-3 pt-4">

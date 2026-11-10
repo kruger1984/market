@@ -22,7 +22,7 @@ class StoreRequest extends FormRequest
             'product.description' => 'required|string',
             'product.content' => 'required|string',
             'product.price' => 'required|numeric',
-            'product.old_price' => 'required|numeric',
+            'product.old_price' => 'nullable|numeric',
             'product.qty' => 'required|integer',
             'product.category_id' => 'required|integer|exists:categories,id',
             'product.product_group_id' => 'required|integer|exists:product_groups,id',
@@ -31,6 +31,28 @@ class StoreRequest extends FormRequest
             'params' => 'nullable|array',
             'params.*.id' => 'required|integer|exists:params,id',
             'params.*.value' => 'required|string',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'product.title' => 'title',
+            'product.sku' => 'SKU',
+            'product.description' => 'description',
+            'product.content' => 'content',
+            'product.price' => 'price',
+            'product.old_price' => 'old price',
+            'product.qty' => 'quantity',
+            'product.category_id' => 'category',
+            'product.product_group_id' => 'product group',
+
+            'params.*.id' => 'parameter',
+            'params.*.value' => 'parameter value',
+            'images.*' => 'image',
         ];
     }
 

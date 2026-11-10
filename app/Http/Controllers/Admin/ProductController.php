@@ -17,6 +17,7 @@ use App\Models\Product;
 use App\Models\ProductGroup;
 use App\Services\ProductService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
 
 class ProductController extends Controller
@@ -39,8 +40,9 @@ class ProductController extends Controller
     {
         $categories = CategoryResource::collection(Category::all())->resolve();
         $productGroups = ProductGroupResource::collection(ProductGroup::all())->resolve();
+        $params = ParamResource::collection(Param::all())->resolve();
 
-        return inertia('admin/product/Create', compact('categories', 'productGroups'));
+        return inertia('admin/product/Create', compact('categories', 'productGroups', 'params'));
     }
 
     /**
@@ -97,6 +99,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
+
         $product->delete();
 
         return redirect()
