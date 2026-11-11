@@ -41,6 +41,7 @@ class ProductResource extends JsonResource
             'images' => ImageResource::collection($this->images)->resolve(),
             'preview_image_url' => $this->preview_image_url,
             'params' => ParamWithPivotValueResource::collection($this->params)->resolve(),
+            'has_children' => $this->children_count ?? $this->children()->exists(),
         ];
     }
 }

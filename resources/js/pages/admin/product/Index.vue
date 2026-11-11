@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
-import { Eye, Pencil, Plus, Trash2 } from '@lucide/vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { Plus } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import {
     Table,
@@ -11,19 +11,14 @@ import {
     TableRow,
 } from '@/components/ui/table';
 
-import { create, destroy, edit, index, show } from '@/routes/admin/products';
+import { create, index } from '@/routes/admin/products';
 import { index as dashboardIndex } from '@/routes/admin/dashboard';
 import { Product } from '@/types/product';
+import ProductTableItem from '@/components/admin/ProductTableItem.vue';
 
 const props = defineProps<{
     products: Product[];
 }>();
-
-const handleDelete = (id: number) => {
-    if (confirm('Are you sure you want to delete this Product?')) {
-        router.delete(destroy.url(id));
-    }
-};
 
 defineOptions({
     layout: {
@@ -64,8 +59,8 @@ defineOptions({
                 <TableHeader>
                     <TableRow>
                         <TableHead class="w-20">ID</TableHead>
-                        <TableHead>Title</TableHead>
                         <TableHead>Image</TableHead>
+                        <TableHead>Title</TableHead>
                         <TableHead>Product Group</TableHead>
                         <TableHead>Qty</TableHead>
                         <TableHead class="text-right">Actions</TableHead>
@@ -73,70 +68,16 @@ defineOptions({
                 </TableHeader>
                 <TableBody>
                     <template v-if="products.length > 0">
-                        <TableRow v-for="product in products" :key="product.id">
-                            <TableCell class="font-medium">{{
-                                product.id
-                            }}</TableCell>
-                            <TableCell class="font-medium"
-                                ><img
-                                    class="w-10"
-                                    :src="product.preview_image_url"
-                                    :alt="product.title"
-                            /></TableCell>
-                            <TableCell
-                                ><Link
-                                    :href="show(product)"
-                                    class="hover:underline"
-                                    >{{ product.title }}</Link
-                                ></TableCell
-                            >
-                            <TableCell class="text-muted-foreground">
-                                {{ product.productGroup.title }}
-                            </TableCell>
-                            <TableCell class="text-muted-foreground">
-                                {{ product.qty }}
-                            </TableCell>
-
-                            <TableCell class="text-right">
-                                <div class="flex justify-end gap-2">
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        as-child
-                                    >
-                                        <Link :href="show.url(product.id)">
-                                            <Eye
-                                                class="h-4 w-4 text-gray-500"
-                                            />
-                                        </Link>
-                                    </Button>
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        as-child
-                                    >
-                                        <Link :href="edit.url(product.id)">
-                                            <Pencil
-                                                class="h-4 w-4 text-blue-500"
-                                            />
-                                        </Link>
-                                    </Button>
-                                    <Button
-                                        class="cursor-pointer"
-                                        variant="outline"
-                                        size="icon"
-                                        @click="handleDelete(product.id)"
-                                    >
-                                        <Trash2 class="h-4 w-4 text-red-500" />
-                                    </Button>
-                                </div>
-                            </TableCell>
-                        </TableRow>
+                        <ProductTableItem
+                            v-for="product in products"
+                            :key="product.id"
+                            :product="product"
+                        />
                     </template>
                     <template v-else>
                         <TableRow>
                             <TableCell
-                                colspan="4"
+                                colspan="6"
                                 class="h-24 text-center text-muted-foreground"
                             >
                                 No products found.

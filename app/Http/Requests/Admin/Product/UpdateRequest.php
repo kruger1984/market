@@ -35,6 +35,7 @@ class UpdateRequest extends FormRequest
             'product.old_price' => 'required|numeric',
             'product.qty' => 'required|integer',
             'product.category_id' => 'required|integer|exists:categories,id',
+            'product.parent_id' => 'nullable|integer|exists:products,id',
             'product.product_group_id' => 'required|integer|exists:product_groups,id',
             'images' => 'nullable|array',
             'images.*' => 'required|file',

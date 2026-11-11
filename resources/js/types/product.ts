@@ -16,6 +16,8 @@ export interface Product {
     images: Image[];
     params: ParamWithPivotValue[];
     preview_image_url: string;
+    has_children: boolean;
+    parent_id: number;
 }
 
 export interface Image {
@@ -34,6 +36,7 @@ export interface ProductForm {
         qty: number;
         category_id: number | null;
         product_group_id: number | null;
+        parent_id?: number | null;
     };
     images: File[];
     params: ParamFormItem[];

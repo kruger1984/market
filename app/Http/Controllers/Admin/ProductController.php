@@ -16,6 +16,7 @@ use App\Models\Param;
 use App\Models\Product;
 use App\Models\ProductGroup;
 use App\Services\ProductService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
@@ -27,10 +28,22 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        $products = Product::all();
+        $products = Product::whereNull('parent_id')->withCount('children')->get();
         $products = ProductResource::collection($products)->resolve();
 
         return inertia('admin/product/Index', compact('products'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexChildren(Product $product): JsonResponse
+    {
+        $children = $product->children;
+
+        return response()->json(
+            ProductResource::collection($children)->resolve()
+        );
     }
 
     /**
@@ -43,6 +56,19 @@ class ProductController extends Controller
         $params = ParamResource::collection(Param::all())->resolve();
 
         return inertia('admin/product/Create', compact('categories', 'productGroups', 'params'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function createChild(Product $product): Response
+    {
+        $categories = CategoryResource::collection(Category::all())->resolve();
+        $productGroups = ProductGroupResource::collection(ProductGroup::all())->resolve();
+        $params = ParamResource::collection(Param::all())->resolve();
+        $product = ProductResource::make($product)->resolve();
+
+        return inertia('admin/product/CreateChild', compact('categories', 'productGroups', 'params', 'product'));
     }
 
     /**

@@ -13,23 +13,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, Plus, Trash2, Upload, X } from 'lucide-vue-next';
+import { ArrowLeft, Upload, X } from 'lucide-vue-next';
 import { store, index } from '@/routes/admin/products';
 import { index as dashboardIndex } from '@/routes/admin/dashboard';
 import type { Category } from '@/types/category';
 import Editor from '@/components/ui/editor/Editor.vue';
 import { ProductGroup } from '@/types/product-group';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
-import type { Param, ParamFormItem } from '@/types/param';
+import type { Param } from '@/types/param';
 import { ProductForm } from '@/types/product';
-import ProductParamsEditor from '@/components/ProductParamsEditor.vue';
+import ProductParamsEditor from '@/components/admin/ProductParamsEditor.vue';
 
 const props = defineProps<{
     categories: Category[];
@@ -84,24 +76,6 @@ const removeImage = (index: number) => {
     imagePreviews.value.splice(index, 1);
     form.images.splice(index, 1);
     form.clearErrors('images');
-};
-
-const getAvailableParams = (currentId: number | null) => {
-    const selectedIds = form.params
-        .map((p) => p.id)
-        .filter((id): id is number => id !== null && id !== currentId);
-    return props.params.filter((param) => !selectedIds.includes(param.id));
-};
-
-const addParamRow = () => {
-    form.params.push({
-        id: null,
-        value: '',
-    });
-};
-
-const removeParamRow = (index: number) => {
-    form.params.splice(index, 1);
 };
 
 const submit = () => {
@@ -422,7 +396,7 @@ const submit = () => {
             </div>
 
             <!-- Parameters Section -->
-            <<ProductParamsEditor
+            <ProductParamsEditor
                 v-model="form.params"
                 :params="props.params"
                 :processing="form.processing"
