@@ -6,7 +6,6 @@ import type { Product } from '@/types/product';
 defineProps<{
     products: Product[];
 }>();
-
 </script>
 
 <template>

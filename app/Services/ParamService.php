@@ -30,7 +30,6 @@ class ParamService
 
     /**
      * @param  Collection<int, Category>  $categoryChildren
-     *
      * @return Collection<int, Param>
      */
     public static function indexByCategories(Collection $categoryChildren): Collection

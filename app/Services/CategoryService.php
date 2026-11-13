@@ -28,8 +28,6 @@ class CategoryService
     }
 
     /**
-     * @param  Category  $category
-     *
      * @return Collection<int, Category>
      */
     public static function getCategoryChildren(Category $category): Collection
@@ -46,8 +44,6 @@ class CategoryService
     }
 
     /**
-     * @param  Category  $category
-     *
      * @return Collection<int, Category>
      */
     public static function getCategoryParents(Category $category): Collection

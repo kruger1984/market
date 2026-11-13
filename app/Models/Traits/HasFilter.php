@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 trait HasFilter
 {
-
     /**
      * @param  Builder<TModel>  $builder
      * @param  array<string, mixed>  $data

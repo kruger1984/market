@@ -21,9 +21,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param  Category  $category
-     * @param  ProductIndexRequest  $request
-     *
      * @return Response|array<int, mixed>
      */
     public function productIndex(Category $category, ProductIndexRequest $request): Response|array

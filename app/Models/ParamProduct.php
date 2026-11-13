@@ -38,7 +38,6 @@ class ParamProduct extends Model
 
     /**
      * @param  Builder<ParamProduct>  $builder
-     * @param  Product  $product
      * @return Builder<ParamProduct>
      */
     public function scopeGroupedByParams(Builder $builder, Product $product): Builder

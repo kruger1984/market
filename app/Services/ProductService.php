@@ -79,7 +79,6 @@ class ProductService
     /**
      * @param  Collection<int, Category>  $categoryChildren
      * @param  array<string, mixed>  $data
-     *
      * @return EloquentCollection<int, Product>
      */
     public static function indexByCategories(Collection $categoryChildren, array $data): Collection

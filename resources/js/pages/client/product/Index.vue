@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import {Head} from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import ProductCard from '@/components/client/ProductCard.vue';
-import type {Product} from '@/types/product';
+import type { Product } from '@/types/product';
 
 defineProps<{
     products: Product[];
 }>();
-
 </script>
 
 <template>
