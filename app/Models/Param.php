@@ -9,6 +9,9 @@ use Database\Factories\ParamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property array<int, mixed> $param_values
+ */
 class Param extends Model
 {
     /** @use HasFactory<ParamFactory> */

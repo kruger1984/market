@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Category;
+use Illuminate\Support\Collection;
 
 class CategoryService
 {
@@ -24,5 +25,40 @@ class CategoryService
         $category->update($data);
 
         return $category->fresh();
+    }
+
+    /**
+     * @param  Category  $category
+     *
+     * @return Collection<int, Category>
+     */
+    public static function getCategoryChildren(Category $category): Collection
+    {
+        $collection = Category::hydrate([]);
+        $categoryChildren = $category->children;
+
+        foreach ($categoryChildren as $categoryChild) {
+            $collection = $collection->merge(self::getCategoryChildren($categoryChild));
+        }
+        $collection->push($category);
+
+        return $collection;
+    }
+
+    /**
+     * @param  Category  $category
+     *
+     * @return Collection<int, Category>
+     */
+    public static function getCategoryParents(Category $category): Collection
+    {
+        $collection = Category::hydrate([]);
+        if ($category->parent_id) {
+            $parentCategory = $category->parent;
+            $collection->push($parentCategory);
+            $collection = $collection->merge(self::getCategoryParents($parentCategory));
+        }
+
+        return $collection->reverse();
     }
 }

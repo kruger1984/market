@@ -20,7 +20,8 @@ class CategoryController extends Controller
      */
     public function index(): Response
     {
-        $categories = Category::with('category')->get();
+        $categories = Category::with('parent')->get();
+
         $categories = CategoryResource::collection($categories)->resolve();
 
         return inertia('admin/category/Index', compact('categories'));
@@ -64,7 +65,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): Response
     {
-        $category->load('category');
+        $category->load('children');
 
         $categories = Category::where('id', '!=', $category->id)->get();
 

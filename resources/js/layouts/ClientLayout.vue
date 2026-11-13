@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
+import ClientSidebarLayout from '@/layouts/client/ClientSidebarLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { Toaster } from '@/components/ui/sonner';
 import { watch } from 'vue';
@@ -28,8 +28,8 @@ watch(
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <ClientSidebarLayout :breadcrumbs="breadcrumbs">
         <slot />
-    </AppLayout>
+    </ClientSidebarLayout>
     <Toaster />
 </template>

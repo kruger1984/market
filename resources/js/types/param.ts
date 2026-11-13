@@ -16,6 +16,14 @@ export interface ParamWithPivotValue {
     value: string;
 }
 
+export interface ParamWithValues {
+    id: number;
+    title: string;
+    filter_type: number;
+    param_values: string[];
+    label: string;
+}
+
 export interface ParamFormItem {
     id: number | null;
     value: string;

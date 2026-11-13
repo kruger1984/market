@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\ProductUserCart;
+use App\Models\Cart;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<ProductUserCart>
+ * @extends Factory<Cart>
  */
-class ProductUserCartFactory extends Factory
+class CartFactory extends Factory
 {
     /**
      * Define the model's default state.

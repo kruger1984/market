@@ -23,7 +23,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'category' => $this->category ? self::make($this->whenLoaded('category'))->resolve() : null,
+            'category' => $this->parent ? self::make($this->whenLoaded('parent'))->resolve() : null,
         ];
     }
 }

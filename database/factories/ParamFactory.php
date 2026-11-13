@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\Param\ParamFilterTypeEnum;
 use App\Models\Param;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,9 @@ class ParamFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->word(),
+            'label' => $this->faker->slug(),
+            'filter_type' => $this->faker->randomElement(ParamFilterTypeEnum::values()),
         ];
     }
 }
