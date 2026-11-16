@@ -31,19 +31,19 @@ class CatalogSeeder extends Seeder
         $sweaters = Category::factory()->nested($knitwear)->create(['title' => 'Sweaters']);
         $hoodies = Category::factory()->nested($knitwear)->create(['title' => 'Hoodies']);
 
-        $color = Param::factory()->create([
+        $color = Param::factory()->create(attributes: [
             'title' => 'Color',
-            'filter_type' => ParamFilterTypeEnum::cases()[0],
+            'filter_type' => ParamFilterTypeEnum::cases()[2],
         ]);
 
         $size = Param::factory()->create([
             'title' => 'Size',
-            'filter_type' => ParamFilterTypeEnum::cases()[0],
+            'filter_type' => ParamFilterTypeEnum::cases()[2],
         ]);
 
         $material = Param::factory()->create([
             'title' => 'Material',
-            'filter_type' => ParamFilterTypeEnum::cases()[0],
+            'filter_type' => ParamFilterTypeEnum::cases()[2],
         ]);
 
         $variants = [

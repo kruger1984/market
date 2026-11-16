@@ -18,7 +18,7 @@ trait HasFilter
      * @param  array<string, mixed>  $data
      * @return Builder<TModel>
      */
-    public function scopeFilter(Builder $builder, $data): Builder
+    public function scopeFilter(Builder $builder, array $data): Builder
     {
         /** @var class-string<AbstractFilter<TModel>> $className */
         $className = 'App\\Http\\Filters\\'.class_basename($this).'Filter';

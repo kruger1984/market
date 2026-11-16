@@ -31,8 +31,6 @@ class CategoryController extends Controller
             return CategoryMapper::productIndexAsJson($category, $data);
         }
 
-        CategoryMapper::productIndex($category, $data);
-
         return inertia('client/product/ProductIndex', CategoryMapper::productIndex($category, $data));
     }
 }

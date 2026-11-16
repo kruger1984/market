@@ -45,13 +45,13 @@ class ProductFilter extends AbstractFilter
      * @param  Builder<Product>  $builder
      * @param  array<int|string, mixed>  $value
      */
-    protected function select(Builder $builder, $value): void
+    protected function select(Builder $builder, array $value): void
     {
-        $builder->whereHas('paramProducts', function ($q) use ($value) {
-            foreach ($value as $key => $v) {
+        foreach ($value as $key => $v) {
+            $builder->whereHas('paramProducts', function ($q) use ($key, $v) {
                 $q->where('param_id', $key)->where('value', $v);
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -60,10 +60,10 @@ class ProductFilter extends AbstractFilter
      */
     protected function checkbox(Builder $builder, array $value): void
     {
-        $builder->whereHas('paramProducts', function ($q) use ($value) {
-            foreach ($value as $key => $v) {
+        foreach ($value as $key => $v) {
+            $builder->whereHas('paramProducts', function ($q) use ($key, $v) {
                 $q->where('param_id', $key)->whereIn('value', $v);
-            }
-        });
+            });
+        }
     }
 }

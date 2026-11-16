@@ -40,6 +40,7 @@ class CategoryMapper
      */
     public static function productIndexAsJson(Category $category, array $data): array
     {
+
         $categoryTreeChildren = CategoryService::getCategoryChildren($category);
 
         return ProductResource::collection(ProductService::indexByCategories($categoryTreeChildren, $data))->resolve();

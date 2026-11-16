@@ -1,21 +1,24 @@
 <script setup lang="ts">
+import { computed, watch } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import ProductCard from '@/components/client/ProductCard.vue';
 import { Badge } from '@/components/ui/badge';
+import { useFilteredProducts } from '@/composables/useFilteredProducts'; // проверьте имя файла
+import ClientLayout from '@/layouts/ClientLayout.vue';
 import { index as categoryProductsIndex } from '@/routes/client/categories/products';
 import type { Category } from '@/types/category';
 import type { ParamWithValues } from '@/types/param';
 import type { Product } from '@/types/product';
-import { index as categoriesIndex } from '@/routes/client/categories';
-import ClientLayout from '@/layouts/ClientLayout.vue';
 
-defineProps<{
+const props = defineProps<{
     products: Product[];
     params: ParamWithValues[];
     breadcrumbs: Category[];
     categoryChildren: Category[];
     category: Category;
 }>();
+
+const { filteredProducts, resetFilteredProducts } = useFilteredProducts();
 
 defineOptions({
     layout: (h: any, page: any) => {
@@ -33,6 +36,17 @@ defineOptions({
         );
     },
 });
+
+watch(
+    () => props.category.id,
+    () => {
+        resetFilteredProducts();
+    },
+);
+
+const displayedProducts = computed(
+    () => filteredProducts.value ?? props.products,
+);
 </script>
 
 <template>
@@ -55,13 +69,13 @@ defineOptions({
         </div>
 
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
-            <div :class="params.length > 0 ? 'lg:col-span-3' : 'lg:col-span-4'">
+            <div class="lg:col-span-4">
                 <div
-                    v-if="products.length > 0"
+                    v-if="displayedProducts.length > 0"
                     class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
                 >
                     <ProductCard
-                        v-for="product in products"
+                        v-for="product in displayedProducts"
                         :key="product.id"
                         :product="product"
                     />
