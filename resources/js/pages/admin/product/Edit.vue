@@ -437,7 +437,7 @@ const submit = () => {
 
             <!-- Parameters Section -->
             <!-- Parameters Section -->
-            <<ProductParamsEditor
+            <ProductParamsEditor
                 v-model="form.params"
                 :params="props.params"
                 :processing="form.processing"

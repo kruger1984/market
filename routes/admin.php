@@ -21,10 +21,10 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', IsAdminMiddleware::c
         ['product-groups' => 'productGroup']
     );
 
-    Route::get('products/{product}/children', [ProductController::class, 'indexChildren'])->name('products.children.index');
-    Route::get('products/{product}/children/store', [ProductController::class, 'createChild'])->name('products.children.store');
-
+    Route::get('products/{product}/children', [ProductController::class, 'indexChildren'])->name(
+        'products.children.index'
+    );
     //    Route::get('products/{product}/children', [ProductController::class, 'indexChild'])->name('products.children.index');
-    //    Route::post('products/{product}/replicate', [ProductController::class, 'replicate'])->name('products.replicate');
+    Route::post('products/{product}/replicate', [ProductController::class, 'replicate'])->name('products.replicate');
     Route::delete('images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
 });

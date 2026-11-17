@@ -18,8 +18,8 @@ use App\Models\ProductGroup;
 use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
+use Throwable;
 
 class ProductController extends Controller
 {
@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        $products = Product::whereNull('parent_id')->withCount('children')->get();
+        $products = Product::whereNull('parent_id')->withCount('children')->orderBy('id')->get();
         $products = ProductResource::collection($products)->resolve();
 
         return inertia('admin/product/Index', compact('products'));
@@ -51,37 +51,23 @@ class ProductController extends Controller
      */
     public function create(): Response
     {
-        $categories = CategoryResource::collection(Category::all())->resolve();
-        $productGroups = ProductGroupResource::collection(ProductGroup::all())->resolve();
-        $params = ParamResource::collection(Param::all())->resolve();
-
-        return inertia('admin/product/Create', compact('categories', 'productGroups', 'params'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function createChild(Product $product): Response
-    {
-        $categories = CategoryResource::collection(Category::all())->resolve();
-        $productGroups = ProductGroupResource::collection(ProductGroup::all())->resolve();
-        $params = ParamResource::collection(Param::all())->resolve();
-        $product = ProductResource::make($product)->resolve();
-
-        return inertia('admin/product/CreateChild', compact('categories', 'productGroups', 'params', 'product'));
+        return inertia('admin/product/Create', $this->getFormReferences());
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @throws Throwable
      */
     public function store(StoreRequest $request): RedirectResponse
     {
-        $data = $request->validationData();
-        $product = ProductService::store($data);
+        return $this->handleAction(function () use ($request): RedirectResponse {
+            ProductService::store($request->validationData());
 
-        return redirect()
-            ->route('admin.products.index')
-            ->with('success', 'Product created successfully!');
+            return redirect()
+                ->route('admin.products.index')
+                ->with('success', 'Product created successfully!');
+        }, 'Error creating product!');
     }
 
     /**
@@ -99,25 +85,40 @@ class ProductController extends Controller
      */
     public function edit(Product $product): Response
     {
-        $product = ProductResource::make($product)->resolve();
-        $categories = CategoryResource::collection(Category::all())->resolve();
-        $productGroups = ProductGroupResource::collection(ProductGroup::all())->resolve();
-        $params = ParamResource::collection(Param::all())->resolve();
+        return inertia('admin/product/Edit', [
+            'product' => ProductResource::make($product)->resolve(),
+            ...$this->getFormReferences(),
+        ]);
+    }
 
-        return inertia('admin/product/Edit', compact('product', 'categories', 'productGroups', 'params'));
+    /**
+     * @throws Throwable
+     */
+    public function replicate(Product $product): RedirectResponse
+    {
+        return $this->handleAction(function () use ($product): RedirectResponse {
+            $cloneProduct = ProductService::replicate($product);
+
+            return redirect()
+                ->route('admin.products.edit', $cloneProduct)
+                ->with('success', 'Product replicated successfully!');
+        }, 'Error cloning product!');
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @throws Throwable
      */
     public function update(UpdateRequest $request, Product $product): RedirectResponse
     {
-        $data = $request->validationData();
-        $product = ProductService::update($product, $data);
+        return $this->handleAction(function () use ($request, $product): RedirectResponse {
+            ProductService::update($product, $request->validationData());
 
-        return redirect()
-            ->route('admin.products.index')
-            ->with('success', 'Product updated successfully!');
+            return redirect()
+                ->route('admin.products.index')
+                ->with('success', 'Product updated successfully!');
+        }, 'Error updating product!');
     }
 
     /**
@@ -125,11 +126,39 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
-
         $product->delete();
 
         return redirect()
             ->back()
             ->with('success', 'Product deleted successfully!');
+    }
+
+    /**
+     * @return array{
+     *     categories: array<int|string, mixed>,
+     *     productGroups: array<int|string, mixed>,
+     *     params: array<int|string, mixed>,
+     * }
+     */
+    private function getFormReferences(): array
+    {
+        return [
+            'categories' => CategoryResource::collection(Category::all())->resolve(),
+            'productGroups' => ProductGroupResource::collection(ProductGroup::all())->resolve(),
+            'params' => ParamResource::collection(Param::all())->resolve(),
+        ];
+    }
+
+    private function handleAction(callable $callback, string $errorMessage): RedirectResponse
+    {
+        try {
+            return $callback();
+        } catch (Throwable $e) {
+            report($e);
+
+            return redirect()
+                ->back()
+                ->with('error', $errorMessage);
+        }
     }
 }

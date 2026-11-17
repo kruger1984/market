@@ -20,18 +20,14 @@ class ProductService
      */
     public static function store(array $data): Product
     {
-        try {
+        return DB::transaction(function () use ($data) {
             DB::beginTransaction();
             $product = Product::create($data['product']);
             self::attachBatchParams($product, $data);
             ImageService::storeBatch($product, $data);
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-            abort(500, $e->getMessage());
-        }
 
-        return $product->fresh();
+            return $product->fresh();
+        });
     }
 
     /**
@@ -41,18 +37,13 @@ class ProductService
      */
     public static function update(Product $product, array $data): Product
     {
-        try {
-            DB::beginTransaction();
+        return DB::transaction(function () use ($product, $data) {
             $product->update($data['product']);
             self::syncBatchParams($product, $data);
             ImageService::storeBatch($product, $data);
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-            abort(500, $e->getMessage());
-        }
 
-        return $product->fresh();
+            return $product->fresh();
+        });
     }
 
     /**
@@ -86,5 +77,23 @@ class ProductService
         $products = Product::byCategories($categoryChildren)->filter($data);
 
         return $products->distinct('parent_id')->get();
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public static function replicate(Product $product): Product
+    {
+        return DB::transaction(function () use ($product): Product {
+            $cloneProduct = $product->replicate();
+            $cloneProduct->sku = (string) fake()->randomNumber(7);
+            $cloneProduct->parent_id = $product->id;
+            $cloneProduct->push();
+
+            ImageService::replicateBatch($product, $cloneProduct);
+            ParamProductService::replicateBatch($product, $cloneProduct);
+
+            return $cloneProduct;
+        });
     }
 }

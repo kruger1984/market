@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import axios from 'axios';
-import { destroy, edit, show } from '@/routes/admin/products';
-import { store, index } from '@/routes/admin/products/children';
+import { destroy, edit, show, replicate } from '@/routes/admin/products';
+import { index } from '@/routes/admin/products/children';
 import {
     ChevronRight,
     Eye,
@@ -146,7 +146,7 @@ const handleChildDeleted = (childId: number) => {
         <TableCell class="text-right">
             <div class="flex justify-end gap-2">
                 <Button variant="outline" size="icon" as-child>
-                    <Link :href="store.url(product.id)">
+                    <Link :href="replicate.url(product.id)" method="post">
                         <PlusSquareIcon class="h-4 w-4 text-green-600" />
                     </Link>
                 </Button>
