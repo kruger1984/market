@@ -28,7 +28,7 @@ class ParamResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'filter_type' => $filterType->value,
-            'filter_type_label' => ucfirst(mb_strtolower($filterType->name)),
+            'label' => $this->label,
         ];
     }
 }

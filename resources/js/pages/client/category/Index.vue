@@ -26,7 +26,7 @@ defineOptions({
     <Head title="Categories" />
 
     <div class="space-y-6 p-3">
-        <h1 class="text-2xl font-bold tracking-tight">Categories</h1>
+        <h1 class="text-2xl font-bold tracking-tight">My Shop</h1>
 
         <div
             v-if="categories.length > 0"

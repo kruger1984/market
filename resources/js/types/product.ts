@@ -1,6 +1,10 @@
 import { Category } from '@/types/category';
 import { ProductGroup } from '@/types/product-group';
-import { type ParamFormItem, ParamWithPivotValue } from '@/types/param';
+import {
+    type ParamFormItem,
+    ParamWithPivotValue,
+    ParamWithProductValues,
+} from '@/types/param';
 
 export interface Product {
     id: number;
@@ -15,6 +19,24 @@ export interface Product {
     productGroup: ProductGroup;
     images: Image[];
     params: ParamWithPivotValue[];
+    preview_image_url: string;
+    has_children: boolean;
+    parent_id: number;
+}
+
+export interface ProductShow {
+    id: number;
+    title: string;
+    description: string;
+    content: string;
+    sku: string;
+    price: number;
+    old_price: number;
+    qty: number;
+    category: Category;
+    productGroup: ProductGroup;
+    images: Image[];
+    params: ParamWithProductValues[];
     preview_image_url: string;
     has_children: boolean;
     parent_id: number;

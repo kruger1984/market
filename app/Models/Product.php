@@ -17,9 +17,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
-/**
- * @property array<int|string, mixed> $grouped_params
- */
 #[ObservedBy(ProductObserver::class)]
 class Product extends Model
 {
@@ -130,5 +127,19 @@ class Product extends Model
     public function siblingProducts(): HasMany
     {
         return $this->parent->children();
+    }
+
+    /**
+     * @return array<int|string, mixed>
+     */
+    public function getGroupedParamsAttribute(): array
+    {
+        return $this->params->groupBy('title')->map(function ($param) {
+            return [
+                'title' => $param->first()->title,
+                'label' => $param->first()->label,
+                'values' => $param->pluck('pivot.value')->toArray(),
+            ];
+        })->values()->toArray();
     }
 }

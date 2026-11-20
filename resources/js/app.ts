@@ -5,15 +5,20 @@ import AuthLayout from '@/layouts/AuthLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 import ClientLayout from '@/layouts/ClientLayout.vue';
+import ClientSimpleLayout from '@/layouts/ClientSimpleLayout.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
+        console.log(name);
+
         switch (true) {
-            case name === 'Welcome':
-                return null;
+            case name === 'client/category/Index':
+                return ClientSimpleLayout;
+            case name === 'client/product/Show':
+                return ClientSimpleLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name.startsWith('settings/'):

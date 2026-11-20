@@ -6,9 +6,6 @@ import { watch } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import 'vue-sonner/style.css';
-import type { Product } from '@/types/product';
-import type { ParamWithValues } from '@/types/param';
-import type { Category } from '@/types/category';
 
 const { breadcrumbs = [] } = defineProps<{
     breadcrumbs?: BreadcrumbItem[];

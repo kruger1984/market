@@ -84,7 +84,7 @@ defineOptions({
                             >
                             <TableCell class="text-muted-foreground">
                                 <Link class="hover:underline">
-                                    {{ param.filter_type_label }}
+                                    {{ param.label }}
                                 </Link>
                             </TableCell>
                             <TableCell class="text-right">

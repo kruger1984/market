@@ -38,9 +38,11 @@ defineOptions({
 
 const form = useForm<{
     title: string;
+    label: string;
     filter_type: number | null;
 }>({
     title: props.param.title,
+    label: props.param.label,
     filter_type: props.param.filter_type ?? null,
 });
 
@@ -78,6 +80,19 @@ const submit = () => {
                 />
                 <p v-if="form.errors.title" class="text-sm text-red-500">
                     {{ form.errors.title }}
+                </p>
+            </div>
+
+            <div class="space-y-2">
+                <Label for="label">Label</Label>
+                <Input
+                    id="label"
+                    v-model="form.label"
+                    placeholder="Enter param label (optional)"
+                    :disabled="form.processing"
+                />
+                <p v-if="form.errors.label" class="text-sm text-red-500">
+                    {{ form.errors.label }}
                 </p>
             </div>
 

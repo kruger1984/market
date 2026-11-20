@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'title' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'content' => $this->faker->paragraph(),
-            'sku' => $this->faker->uuid(),
+            'sku' => $this->faker->unique()->bothify('????###'),
             'price' => $this->faker->numberBetween(1, 100),
             'old_price' => $this->faker->numberBetween(1, 100),
             'qty' => $this->faker->numberBetween(1, 100),

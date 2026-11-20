@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\Category\CategoryWithUrlResource;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\ProductWithGroupedParamResource;
 use App\Models\Product;
@@ -25,7 +25,7 @@ class ProductController extends Controller
     public function show(Product $product): Response
     {
         $breadcrumbs = CategoryService::getCategoryParents($product->category);
-        $breadcrumbs = CategoryResource::collection($breadcrumbs->push($product->category))->resolve();
+        $breadcrumbs = CategoryWithUrlResource::collection($breadcrumbs->push($product->category))->resolve();
 
         $paramProducts = ParamProductService::getGroupedByParamArray($product);
         $product = ProductWithGroupedParamResource::make($product)->resolve();

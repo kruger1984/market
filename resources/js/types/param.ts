@@ -2,7 +2,7 @@ export interface Param {
     id: number;
     title: string;
     filter_type: number;
-    filter_type_label: string;
+    label: string;
 }
 
 export interface FilterTypeOption {
@@ -14,6 +14,13 @@ export interface ParamWithPivotValue {
     id: number;
     title: string;
     value: string;
+}
+
+export interface ParamWithProductValues {
+    id: number;
+    title: string;
+    values: string[];
+    label: string;
 }
 
 export interface ParamWithValues {

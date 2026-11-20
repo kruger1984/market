@@ -20,6 +20,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
+            'label' => ['nullable', 'string'],
             'filter_type' => ['required', Rule::enum(ParamFilterTypeEnum::class)],
         ];
     }
