@@ -33,8 +33,8 @@ export interface ProductShow {
     price: number;
     old_price: number;
     qty: number;
-    category: Category;
-    productGroup: ProductGroup;
+    category_id: number;
+    product_group_id: number;
     group_products: Product[];
     images: Image[];
     params: ParamWithProductValues[];

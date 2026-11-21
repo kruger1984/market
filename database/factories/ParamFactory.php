@@ -24,6 +24,7 @@ class ParamFactory extends Factory
             'title' => $this->faker->word(),
             'label' => $this->faker->slug(),
             'filter_type' => $this->faker->randomElement(ParamFilterTypeEnum::values()),
+            'is_show_in_cart' => true,
         ];
     }
 }

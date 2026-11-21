@@ -32,7 +32,7 @@ class UpdateRequest extends FormRequest
                 Rule::unique('products', 'sku')->ignore($product->id),
             ],
             'product.price' => 'required|numeric',
-            'product.old_price' => 'required|numeric',
+            'product.old_price' => 'nullable|numeric',
             'product.qty' => 'required|integer',
             'product.category_id' => 'required|integer|exists:categories,id',
             'product.parent_id' => 'nullable|integer|exists:products,id',

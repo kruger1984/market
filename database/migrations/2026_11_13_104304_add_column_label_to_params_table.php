@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('params', function (Blueprint $table) {
             $table->string('label')->nullable();
-            $table->boolean('is_show_in_card')->default(false);
+            $table->boolean('is_show_in_cart')->default(false);
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     {
         Schema::table('params', function (Blueprint $table) {
             $table->dropColumn('label');
-            $table->dropColumn('is_show_in_card');
+            $table->dropColumn('is_show_in_cart');
         });
     }
 };

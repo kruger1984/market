@@ -26,7 +26,7 @@ class ParamProductService
         $paramProducts = ParamProduct::groupedByParams($product)->get()
             ->groupBy('param_id')->map(function ($paramProductItem) {
                 return [
-                    'title' => $paramProductItem->first()->title,
+                    'title' => $paramProductItem->first()->param->title,
                     'data' => $paramProductItem->toArray(),
                 ];
             });
