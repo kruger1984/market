@@ -35,6 +35,7 @@ export interface ProductShow {
     qty: number;
     category: Category;
     productGroup: ProductGroup;
+    group_products: Product[];
     images: Image[];
     params: ParamWithProductValues[];
     preview_image_url: string;

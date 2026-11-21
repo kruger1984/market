@@ -15,6 +15,12 @@ import {
 } from '@/components/ui/number-field';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-vue-next';
+import ProductCard from '@/components/client/ProductCard.vue';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from '@/components/ui/carousel';
 
 const props = defineProps<{
     product: ProductShow;
@@ -185,6 +191,20 @@ const nextImage = () => {
                     <Button size="lg" class="flex-1 sm:min-w-44">
                         Order
                     </Button>
+                </div>
+                <h3 class="border-t border-border pt-4">Related products</h3>
+                <div v-if="product.group_products.length > 0">
+                    <Carousel>
+                        <CarouselContent>
+                            <template
+                                v-for="groupProduct in product.group_products"
+                            >
+                                <CarouselItem class="basis-1/2">
+                                    <ProductCard :product="groupProduct" />
+                                </CarouselItem>
+                            </template>
+                        </CarouselContent>
+                    </Carousel>
                 </div>
             </div>
         </div>

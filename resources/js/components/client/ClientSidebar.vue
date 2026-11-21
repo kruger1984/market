@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import AppLogo from '@/components/AppLogo.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -15,7 +15,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { index as dashboard } from '@/routes/admin/dashboard/index';
+import { index as homePage } from '@/routes/client/categories';
 import { index as categoryProductsIndex } from '@/routes/client/categories/products';
 import type { Category } from '@/types/category';
 import type { ParamWithValues } from '@/types/param';
@@ -103,12 +103,12 @@ const applyFilters = async (): Promise<void> => {
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar collapsible="offcanvas" variant="inset">
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                        <Link :href="homePage()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
