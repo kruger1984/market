@@ -5,6 +5,7 @@ import ClientSidebar from '@/components/client/ClientSidebar.vue';
 import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
 import { Toaster } from '@/components/ui/sonner';
 import type { BreadcrumbItem } from '@/types';
+import Cart from '@/components/cart/Cart.vue';
 
 type Props = {
     breadcrumbs?: BreadcrumbItem[];

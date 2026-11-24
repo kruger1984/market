@@ -4,6 +4,8 @@ export type User = {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
+    carts_product_count: number | null;
+    carts_total_sum: number | null;
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;

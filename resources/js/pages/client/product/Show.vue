@@ -1,26 +1,20 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import ProductCard from '@/components/client/ProductCard.vue';
 import ProductGallery from '@/components/client/ProductGallery.vue';
-import { Button } from '@/components/ui/button';
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
 } from '@/components/ui/carousel';
-import {
-    NumberField,
-    NumberFieldContent,
-    NumberFieldDecrement,
-    NumberFieldIncrement,
-    NumberFieldInput,
-} from '@/components/ui/number-field';
 import { show } from '@/routes/client/products';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbItem, User } from '@/types';
 import { ParamProductGroup, ParamProductItem } from '@/types/param-product';
 import { ProductShow } from '@/types/product';
+import StoreOrUpdateCart from '@/components/client/StoreOrUpdateCart.vue';
+import Cart from '@/components/cart/Cart.vue';
 
 const props = defineProps<{
     product: ProductShow;
@@ -54,8 +48,6 @@ const goToProduct = (item: ParamProductItem) => {
 
     router.visit(show(item.product_id).url);
 };
-
-const quantity = ref(1);
 </script>
 
 <template>
@@ -66,7 +58,10 @@ const quantity = ref(1);
             v-if="breadcrumbs.length > 1"
             class="border-b border-border pb-4 text-muted-foreground"
         >
-            <Breadcrumbs :breadcrumbs="breadcrumbs" />
+            <div class="flex items-center justify-between">
+                <Breadcrumbs :breadcrumbs="breadcrumbs" />
+                <Cart />
+            </div>
         </div>
 
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -149,24 +144,7 @@ const quantity = ref(1);
                     </template>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-4 pt-2">
-                    <NumberField
-                        v-model="quantity"
-                        :min="1"
-                        :max="product.qty || 99"
-                        class="w-32"
-                    >
-                        <NumberFieldContent>
-                            <NumberFieldDecrement />
-                            <NumberFieldInput />
-                            <NumberFieldIncrement />
-                        </NumberFieldContent>
-                    </NumberField>
-
-                    <Button size="lg" class="flex-1 sm:min-w-44">
-                        Order
-                    </Button>
-                </div>
+                <StoreOrUpdateCart :product="product" />
 
                 <template v-if="product.group_products.length > 0">
                     <h3 class="border-t border-border pt-4">

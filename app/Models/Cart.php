@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Cart extends Model
 {
-    protected $table = 'product_user_carts';
+    protected $table = 'carts';
 
     /**
      * @return BelongsTo<Product, $this>

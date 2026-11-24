@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Product;
 
+use App\Http\Resources\Cart\CartResource;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Image\ImageResource;
 use App\Http\Resources\Param\ParamWithPivotValueResource;
@@ -35,6 +36,7 @@ class ProductResource extends JsonResource
             'old_price' => $this->old_price,
             'qty' => $this->qty,
             'category_id' => $this->category_id,
+            'cart' => $this->cart ? CartResource::make($this->cart)->resolve() : null,
             'category' => CategoryResource::make($this->category)->resolve(),
             'product_group_id' => $this->product_group_id,
             'productGroup' => ProductGroupResource::make($this->productGroup)->resolve(),

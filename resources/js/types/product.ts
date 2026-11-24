@@ -5,6 +5,7 @@ import {
     ParamWithPivotValue,
     ParamWithProductValues,
 } from '@/types/param';
+import { Cart } from '@/types/cart';
 
 export interface Product {
     id: number;
@@ -22,6 +23,7 @@ export interface Product {
     preview_image_url: string;
     has_children: boolean;
     parent_id: number;
+    cart: Cart;
 }
 
 export interface ProductShow {
@@ -41,6 +43,7 @@ export interface ProductShow {
     preview_image_url: string;
     has_children: boolean;
     parent_id: number;
+    cart: Cart;
 }
 
 export interface Image {

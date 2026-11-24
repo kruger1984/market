@@ -13,6 +13,7 @@ import {
 import { show as productShow } from '@/routes/client/products';
 import { index as categoryProductsIndex } from '@/routes/client/categories/products';
 import type { Product } from '@/types/product';
+import StoreOrUpdateCart from '@/components/client/StoreOrUpdateCart.vue';
 
 defineProps<{
     product: Product;
@@ -78,10 +79,7 @@ defineProps<{
         </CardContent>
 
         <CardFooter class="pt-0">
-            <Button class="w-full gap-2" :disabled="product.qty <= 0">
-                <ShoppingCart class="h-4 w-4" />
-                To Cart
-            </Button>
+            <StoreOrUpdateCart :product="product" />
         </CardFooter>
     </Card>
 </template>
