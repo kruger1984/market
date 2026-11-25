@@ -7,11 +7,9 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Cart\StoreRequest;
 use App\Http\Requests\Client\Cart\UpdateRequest;
-use App\Http\Resources\Cart\CartWithProductAndTotalSumResource;
 use App\Http\Resources\Cart\CartWithProductResource;
 use App\Models\Cart;
 use App\Services\CartService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
@@ -24,20 +22,18 @@ class CartController extends Controller
         return inertia('client/cart/Index', compact('carts'));
     }
 
-    public function store(StoreRequest $request): JsonResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        $cart = CartService::store($data);
+        CartService::store($request->validated());
 
-        return response()->json(CartWithProductAndTotalSumResource::make($cart)->resolve());
+        return back()->with('success', 'Added to cart');
     }
 
-    public function update(Cart $cart, UpdateRequest $request): JsonResponse
+    public function update(Cart $cart, UpdateRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        $cart = CartService::update($cart, $data);
+        CartService::update($cart, $request->validated());
 
-        return response()->json(CartWithProductAndTotalSumResource::make($cart)->resolve());
+        return back();
     }
 
     public function destroy(Cart $cart): RedirectResponse

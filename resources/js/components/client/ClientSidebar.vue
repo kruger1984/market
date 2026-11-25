@@ -180,5 +180,4 @@ const applyFilters = async (): Promise<void> => {
             <Button class="w-full" @click="applyFilters"> Фильтр </Button>
         </SidebarFooter>
     </Sidebar>
-    <slot />
 </template>

@@ -1,35 +1,25 @@
 <script setup lang="ts">
-import AdminSidebarLayout from '@/layouts/admin/AdminSidebarLayout.vue';
+import AppContent from '@/components/AppContent.vue';
+import AppShell from '@/components/AppShell.vue';
+import AppSidebar from '@/components/AppSidebar.vue';
+import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
 import type { BreadcrumbItem } from '@/types';
-import { Toaster } from '@/components/ui/sonner';
-import { watch } from 'vue';
-import { usePage } from '@inertiajs/vue3';
-import { toast } from 'vue-sonner';
-import 'vue-sonner/style.css';
 
-const { breadcrumbs = [] } = defineProps<{
+type Props = {
     breadcrumbs?: BreadcrumbItem[];
-}>();
+};
 
-const page = usePage();
-
-watch(
-    () => page.props.flash,
-    (flash: any) => {
-        if (flash?.success) {
-            toast.success(flash.success);
-        }
-        if (flash?.error) {
-            toast.error(flash.error);
-        }
-    },
-    { deep: true, immediate: true },
-);
+withDefaults(defineProps<Props>(), {
+    breadcrumbs: () => [],
+});
 </script>
 
 <template>
-    <AdminSidebarLayout :breadcrumbs="breadcrumbs">
-        <slot />
-    </AdminSidebarLayout>
-    <Toaster />
+    <AppShell variant="sidebar">
+        <AppSidebar />
+        <AppContent variant="sidebar" class="min-w-0 overflow-x-clip">
+            <AppSidebarHeader :breadcrumbs="breadcrumbs" />
+            <slot />
+        </AppContent>
+    </AppShell>
 </template>

@@ -42,8 +42,12 @@ class ParamProduct extends Model
      */
     public function scopeGroupedByParams(Builder $builder, Product $product): Builder
     {
-        return self::whereHas('param', function ($b) {
-            return $b->where('is_show_in_cart', true);
-        })->whereIn('product_id', $product->siblingProducts->pluck('id'))->with('param');
+        $productIds = $product->parent_id
+            ? $product->siblingProducts->pluck('id')
+            : collect([$product->id]);
+
+        return $builder->whereHas('param', function (Builder $b) {
+            $b->where('is_show_in_cart', true);
+        })->whereIn('product_id', $productIds)->with('param');
     }
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ShoppingCart } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
@@ -62,43 +62,34 @@ function syncCartState(data: CartMutationResponse): void {
     }
 }
 
-function storeCart(): void {
-    if (isSubmitting.value) {
-        return;
-    }
-
-    isSubmitting.value = true;
-
-    axios
-        .post<CartMutationResponse>(store().url, {
-            product_id: props.product.id,
-            qty: 1,
-        })
-        .then((res) => {
-            syncCartState(res.data);
-        })
-        .finally(() => {
-            isSubmitting.value = false;
-        });
+function storeCart() {
+    router.post(
+        store(),
+        { product_id: props.product.id, qty: 1 },
+        {
+            preserveScroll: true,
+            onStart: () => (isSubmitting.value = true),
+            onFinish: () => (isSubmitting.value = false),
+        },
+    );
 }
 
 function updateCart(): void {
-    if (!cart.value?.id || isSubmitting.value) {
+    const cartId = cart.value?.id;
+
+    if (!cartId || isSubmitting.value) {
         return;
     }
 
-    isSubmitting.value = true;
-
-    axios
-        .patch<CartMutationResponse>(update(cart.value.id).url, {
-            qty: quantity.value,
-        })
-        .then((res) => {
-            syncCartState(res.data);
-        })
-        .finally(() => {
-            isSubmitting.value = false;
-        });
+    router.patch(
+        update(cartId),
+        { qty: quantity.value },
+        {
+            preserveScroll: true,
+            onStart: () => (isSubmitting.value = true),
+            onFinish: () => (isSubmitting.value = false),
+        },
+    );
 }
 </script>
 

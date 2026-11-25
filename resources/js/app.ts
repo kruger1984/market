@@ -2,32 +2,33 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { initializeTheme } from '@/composables/useAppearance';
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import ClientHeaderLayout from '@/layouts/ClientHeaderLayout.vue';
+import ClientLayout from '@/layouts/ClientLayout.vue';
+import RootLayout from '@/layouts/RootLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
-import ClientLayout from '@/layouts/ClientLayout.vue';
-import ClientSimpleLayout from '@/layouts/ClientSimpleLayout.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+const clientHeaderPages = ['client/category/Index', 'client/product/Show'];
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
-        console.log(name);
-
-        switch (true) {
-            case name === 'client/category/Index':
-                return ClientSimpleLayout;
-            case name === 'client/product/Show':
-                return ClientSimpleLayout;
-            case name.startsWith('auth/'):
-                return AuthLayout;
-            case name.startsWith('settings/'):
-                return [AdminLayout, SettingsLayout];
-            case name.startsWith('admin/'):
-                return AdminLayout;
-            default:
-                return ClientLayout;
+        if (name.startsWith('auth/')) {
+            return [RootLayout, AuthLayout];
         }
+        if (name.startsWith('settings/')) {
+            return [RootLayout, AdminLayout, SettingsLayout];
+        }
+        if (name.startsWith('admin/')) {
+            return [RootLayout, AdminLayout];
+        }
+        if (clientHeaderPages.includes(name)) {
+            return [RootLayout, ClientHeaderLayout];
+        }
+
+        return [RootLayout, ClientLayout];
     },
     withApp: (app) => {
         app.directive('focus', {

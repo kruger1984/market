@@ -2,7 +2,6 @@
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import type { BreadcrumbItem } from '@/types';
-import Cart from '@/components/cart/Cart.vue';
 
 withDefaults(
     defineProps<{
@@ -24,6 +23,6 @@ withDefaults(
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </template>
         </div>
-        <Cart />
+        <slot name="actions" />
     </header>
 </template>

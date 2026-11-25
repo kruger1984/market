@@ -4,7 +4,6 @@ import { Head, Link } from '@inertiajs/vue3';
 import ProductCard from '@/components/client/ProductCard.vue';
 import { Badge } from '@/components/ui/badge';
 import { useFilteredProducts } from '@/composables/useFilteredProducts'; // проверьте имя файла
-import ClientLayout from '@/layouts/ClientLayout.vue';
 import { index as categoryProductsIndex } from '@/routes/client/categories/products';
 import type { Category } from '@/types/category';
 import type { ParamWithValues } from '@/types/param';
@@ -21,20 +20,12 @@ const props = defineProps<{
 const { filteredProducts, resetFilteredProducts } = useFilteredProducts();
 
 defineOptions({
-    layout: (h: any, page: any) => {
-        const backendBreadcrumbs: Category[] = page.props.breadcrumbs ?? [];
-
-        return h(
-            ClientLayout,
-            {
-                breadcrumbs: backendBreadcrumbs.map((item) => ({
-                    title: item.title,
-                    href: categoryProductsIndex(item.id),
-                })),
-            },
-            () => page,
-        );
-    },
+    layout: (props: { breadcrumbs?: Category[] }) => ({
+        breadcrumbs: (props.breadcrumbs ?? []).map((item) => ({
+            title: item.title,
+            href: categoryProductsIndex(item.id),
+        })),
+    }),
 });
 
 watch(

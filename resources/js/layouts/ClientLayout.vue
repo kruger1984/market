@@ -1,35 +1,31 @@
 <script setup lang="ts">
-import ClientSidebarLayout from '@/layouts/client/ClientSidebarLayout.vue';
+import AppContent from '@/components/AppContent.vue';
+import AppShell from '@/components/AppShell.vue';
+import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
+import Cart from '@/components/cart/Cart.vue';
+import ClientSidebar from '@/components/client/ClientSidebar.vue';
 import type { BreadcrumbItem } from '@/types';
-import { Toaster } from '@/components/ui/sonner';
-import { watch } from 'vue';
-import { usePage } from '@inertiajs/vue3';
-import { toast } from 'vue-sonner';
-import 'vue-sonner/style.css';
 
-const { breadcrumbs = [] } = defineProps<{
-    breadcrumbs?: BreadcrumbItem[];
-}>();
-
-const page = usePage();
-
-watch(
-    () => page.props.flash,
-    (flash: any) => {
-        if (flash?.success) {
-            toast.success(flash.success);
-        }
-        if (flash?.error) {
-            toast.error(flash.error);
-        }
+withDefaults(
+    defineProps<{
+        breadcrumbs?: BreadcrumbItem[];
+    }>(),
+    {
+        breadcrumbs: () => [],
     },
-    { deep: true, immediate: true },
 );
 </script>
 
 <template>
-    <ClientSidebarLayout :breadcrumbs="breadcrumbs">
-        <slot />
-    </ClientSidebarLayout>
-    <Toaster />
+    <AppShell variant="sidebar">
+        <ClientSidebar />
+        <AppContent variant="sidebar" class="min-w-0 overflow-x-clip">
+            <AppSidebarHeader :breadcrumbs="breadcrumbs">
+                <template #actions>
+                    <Cart />
+                </template>
+            </AppSidebarHeader>
+            <slot />
+        </AppContent>
+    </AppShell>
 </template>

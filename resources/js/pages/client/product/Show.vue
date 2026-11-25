@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import ProductCard from '@/components/client/ProductCard.vue';
 import ProductGallery from '@/components/client/ProductGallery.vue';
 import {
@@ -14,7 +13,6 @@ import { BreadcrumbItem, User } from '@/types';
 import { ParamProductGroup, ParamProductItem } from '@/types/param-product';
 import { ProductShow } from '@/types/product';
 import StoreOrUpdateCart from '@/components/client/StoreOrUpdateCart.vue';
-import Cart from '@/components/cart/Cart.vue';
 
 const props = defineProps<{
     product: ProductShow;
@@ -54,16 +52,6 @@ const goToProduct = (item: ParamProductItem) => {
     <Head :title="product.title" />
 
     <div class="mx-auto max-w-6xl space-y-8 px-4 py-6 sm:px-6 lg:px-8">
-        <div
-            v-if="breadcrumbs.length > 1"
-            class="border-b border-border pb-4 text-muted-foreground"
-        >
-            <div class="flex items-center justify-between">
-                <Breadcrumbs :breadcrumbs="breadcrumbs" />
-                <Cart />
-            </div>
-        </div>
-
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <ProductGallery :product="product" />
 
