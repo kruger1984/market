@@ -13,6 +13,7 @@ import {
 
 import { destroy } from '@/routes/client/carts';
 import { CartWithProductAndTotal } from '@/types/cart';
+import { show } from '@/routes/client/products'
 
 const props = defineProps<{
     carts: CartWithProductAndTotal[];
@@ -38,7 +39,6 @@ const handleDelete = (id: number) => {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead class="w-20">ID</TableHead>
                         <TableHead>Title</TableHead>
                         <TableHead>Qty</TableHead>
                         <TableHead>Total</TableHead>
@@ -49,10 +49,7 @@ const handleDelete = (id: number) => {
                     <template v-if="carts.length > 0">
                         <TableRow v-for="cart in carts" :key="cart.id">
                             <TableCell class="font-medium">
-                                {{ cart.product_id }}
-                            </TableCell>
-                            <TableCell class="font-medium">
-                                {{ cart.product_title }}
+                                <Link :href="show(cart.product_id)" class="hover:underline">{{ cart.product_title }}</Link>
                             </TableCell>
                             <TableCell class="font-medium">
                                 {{ cart.qty }}

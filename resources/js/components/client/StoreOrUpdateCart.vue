@@ -46,22 +46,6 @@ watch(
     },
 );
 
-function syncCartState(data: CartMutationResponse): void {
-    cart.value = {
-        id: data.id,
-        product_id: data.product_id,
-        qty: data.qty,
-    };
-    quantity.value = data.qty;
-
-    const authUser = page.props.auth?.user as
-        | { carts_total_sum?: number }
-        | undefined;
-    if (authUser) {
-        authUser.carts_total_sum = data.carts_total_sum;
-    }
-}
-
 function storeCart() {
     router.post(
         store(),
